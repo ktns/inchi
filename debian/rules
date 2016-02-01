@@ -3,19 +3,29 @@
 CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
 CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
 LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
-LIB_DIR=$(CURDIR)/debian/tmp/usr/lib/$(shell dpkg-architecture -q DEB_HOST_GNU_TYPE)
+LIB_DIR=$(CURDIR)/debian/results
+DEST_LIB_DIR=$(CURDIR)/debian/tmp/usr/lib/$(shell dpkg-architecture -q DEB_HOST_GNU_TYPE)
+DEST_INCLUDE_DIR=$(CURDIR)/debian/tmp/usr/include
 
 %:
 	dh $@ --parallel
 
 override_dh_auto_clean:
+	rm -rf $(LIB_DIR)
 	rm -f $(wildcard INCHI_API/gcc_so_makefile/*.o)
 
 override_dh_auto_build:
 	mkdir -p $(LIB_DIR)
-	+make ISLINUX=1 -C INCHI_API/gcc_so_makefile \
+	make ISLINUX=1 -C INCHI_API/gcc_so_makefile \
 		C_COMPILER=$(CC) C_OPTIONS="-c $(CPPFLAGS) $(CFLAGS)" \
 		C_MAIN_OPTIONS=-DINCHI_LINK_AS_DLL C_SO_OPTIONS=-fPIC \
 		LINKER="$(CC) -s $(LDFLAGS)" \
 		SHARED_LINK="$(CC) -shared" SHARED_LINK_PARM=$(LDFLAGS) \
 		LIB_DIR=$(LIB_DIR)
+
+override_dh_auto_install:
+	install -d $(DEST_LIB_DIR) $(DEST_INCLUDE_DIR)
+	install -t $(DEST_LIB_DIR) -m 644 $(LIB_DIR)/$(shell readlink $(LIB_DIR)/libinchi.so.1)
+	cp -dt $(DEST_LIB_DIR) $(LIB_DIR)/libinchi.so.1
+	install -t $(DEST_INCLUDE_DIR) INCHI_API/INCHI_DLL/inchi_api.h
+	ln -s libinchi.so.1 $(DEST_LIB_DIR)/libinchi.so
