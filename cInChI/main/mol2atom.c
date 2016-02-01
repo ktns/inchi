@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +22,7 @@
 
 #include "mode.h"
 
-#include "comdef.h"
+#include "incomdef.h"   /*^^^ comdef.h renamed to incomdef.h (avoid collision with MS comdef.h) */
 #include "readmol.h"
 #include "inpdef.h"
 #include "util.h"
@@ -53,14 +60,16 @@ void FreeInpAtom( inp_ATOM **at )
 /******************************************************************************************************/
 inp_ATOM *CreateInpAtom( int num_atoms )
 {
-    /*
+    
     void *p = inchi_calloc(num_atoms, sizeof(inp_ATOM) );
-    if ( p == (void*)0x009143A8 ) {
+    /* -- for debug only --
+    if ( p == (void*)0x00CAD558 ) {
         int stop = 1;
     }
-    return (inp_ATOM* )p;
     */
-   return (inp_ATOM* ) inchi_calloc(num_atoms, sizeof(inp_ATOM) );
+    return (inp_ATOM* )p;
+    
+   /* return (inp_ATOM* ) inchi_calloc(num_atoms, sizeof(inp_ATOM) ); */
 }
 /******************************************************************************************************/
 void FreeInpAtomData( INP_ATOM_DATA *inp_at_data )
@@ -499,7 +508,9 @@ void calculate_valences (MOL_DATA* mol_data, inp_ATOM* at, int *num_atoms, int b
             }
             memset( num_bond_type, 0, sizeof(num_bond_type) );
 
-            valence = at[a1].chem_bonds_valence; /*  save atom valence if available */
+            /* valence = at[a1].chem_bonds_valence; */ /*  save atom valence if available */
+            /* 2006-08-31: fix for uncharged >N(IV)- in an aromatic ring */
+            valence = (mol_data && mol_data->ctab.MolAtom) ? mol_data->ctab.MolAtom[a1].cValence : at[a1].chem_bonds_valence;
 
             at[a1].chem_bonds_valence = 0;
             bHasMetalNeighbor = 0;
@@ -554,7 +565,8 @@ void calculate_valences (MOL_DATA* mol_data, inp_ATOM* at, int *num_atoms, int b
             if ( n2 && !valence ) {
                 /* atom has aromatic bonds AND the chemical valence is not known */
                 int num_H = NUMH(at, a1);
-                int chem_valence = at[a1].chem_bonds_valence + num_H;
+                 /* bug fix 2006-08-25: aliased H result in num_H > 0 => wrong call to detect_unusual_el_valence() */
+                int chem_valence = at[a1].chem_bonds_valence /*+ num_H*/;
                 int bUnusualValenceArom = 
                     detect_unusual_el_valence( (int)at[a1].el_number, at[a1].charge,
                                                 at[a1].radical, chem_valence,

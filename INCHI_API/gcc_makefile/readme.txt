@@ -1,17 +1,24 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 This makefile was tested with
 gcc version 3.4.2 (mingw-special)
-under Win2k SP4
-and gcc version 4.1.0 20060304 (Red Hat 4.1.0-3)
-under Fedora Core 5
+under WinXP Pro SP2
+and gcc version 4.1.2 20070502 (Red Hat 4.1.2-12)
+under Fedora Core 7
 
 It creates a statically linked to the InChI
 library test application consisting of:

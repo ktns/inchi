@@ -1,18 +1,27 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "e_mode.h"
+
 #include "inchi_api.h"
+
 #include "e_inchi_atom.h"
 #include "e_ichisize.h"
 #include "e_util.h"
@@ -43,6 +52,9 @@ inchi_Stereo0D *e_CreateInchi_Stereo0D( int num_stereo0D )
 {
    return (inchi_Stereo0D* ) e_inchi_calloc(num_stereo0D, sizeof(inchi_Stereo0D) );
 }
+
+
+
 /******************************************************************************************************/
 void e_FreeInchi_Input( inchi_Input *inp_at_data )
 {
@@ -50,7 +62,13 @@ void e_FreeInchi_Input( inchi_Input *inp_at_data )
     e_FreeInchi_Stereo0D( &inp_at_data->stereo0D );
     memset( inp_at_data, 0, sizeof(*inp_at_data) );
 }
-/*********************************************************/
+
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+/* 	e_RemoveRedundantNeighbors: after calling it, the 'neighbor' in atomic 
+	data for any atom 'i' will contain only atoms whose numbers < i				*/
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 int e_RemoveRedundantNeighbors( inchi_Input *inp_at_data )
 {
     int i, j, k;

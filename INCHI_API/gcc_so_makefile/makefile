@@ -28,7 +28,7 @@ endif
 
 # === version ===
 MAIN_VERSION = .1
-VERSION = $(MAIN_VERSION).01.00
+VERSION = $(MAIN_VERSION).02.00
 
 # === executable & library directory ===
 ifndef LIB_DIR
@@ -108,13 +108,12 @@ endif
 
 ifdef CREATE_MAIN
 
-# === InChI Main source files ============
-
 INCHI_MAIN_SRCS = $(P_MAIN)e_0dstereo.c   $(P_MAIN)e_ichimain.c   \
                   $(P_MAIN)e_ichi_io.c    $(P_MAIN)e_ichi_parms.c \
                   $(P_MAIN)e_inchi_atom.c $(P_MAIN)e_mol2atom.c   \
                   $(P_MAIN)e_readinch.c   $(P_MAIN)e_readmol.c    \
-                  $(P_MAIN)e_readstru.c   $(P_MAIN)e_util.c
+                  $(P_MAIN)e_readstru.c   $(P_MAIN)e_util.c       \
+                  $(P_MAIN)e_ichimain_a.c                      
 
 
 # === InChI Main object files ============
@@ -123,8 +122,8 @@ INCHI_MAIN_OBJS = e_0dstereo.o    e_ichimain.o   \
                   e_ichi_io.o     e_ichi_parms.o \
                   e_inchi_atom.o  e_mol2atom.o   \
                   e_readinch.o    e_readmol.o    \
-                  e_readstru.o    e_util.o
-
+                  e_readstru.o    e_util.o    \
+                  e_ichimain_a.o
 
 # === InChI Main Link rule ================
 
@@ -168,7 +167,10 @@ INCHI_LIB_SRCS = $(P_LIBR)ichican2.c       $(P_LIBR)ichicano.c \
                  $(P_LIBR)ichirvr4.c       $(P_LIBR)ichirvr5.c \
                  $(P_LIBR)ichirvr6.c       $(P_LIBR)ichirvr7.c \
                  $(P_LIBR)inchi_dll_main.c $(P_LIBR)runichi.c  \
-                 $(P_LIBR)strutil.c        $(P_LIBR)util.c
+                 $(P_LIBR)inchi_dll_a.c    $(P_LIBR)inchi_dll_a2.c  \
+                 $(P_LIBR)ikey_dll.c       $(P_LIBR)ikey_base26.c  \
+                 $(P_LIBR)sha2.c           $(P_LIBR)strutil.c  \
+                 $(P_LIBR)util.c
 
 # === InChI Library Object files ============
 
@@ -188,7 +190,10 @@ INCHI_LIB_OBJS = ichican2.o       ichicano.o \
                  ichirvr4.o       ichirvr5.o \
                  ichirvr6.o       ichirvr7.o \
                  inchi_dll_main.o runichi.o  \
-                 strutil.o        util.o
+                 inchi_dll_a.o    inchi_dll_a2.o  \
+                 ikey_dll.o       ikey_base26.o  \
+                 sha2.o           strutil.o  \
+                 util.o
 
 # === InChI Library link rule =========
 

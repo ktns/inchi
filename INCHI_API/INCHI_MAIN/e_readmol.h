@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #ifndef __READMOL_H__
 #define __READMOL_H__
@@ -16,12 +23,12 @@
  * Design Limited", J. Chem. Inf. Comput. Sci., 1992, 32, 244-255.
  */
 
-/*
-#define MOLFILEINPLINELEN   84  // add cr, lf, double zero termination
+#if 0
+#define MOLFILEINPLINELEN   84  /* add cr, lf, double zero termination */
 #ifndef MOLFILEMAXLINELEN
 #define MOLFILEMAXLINELEN   80
 #endif
-*/
+#endif
 
 #define MOLFILEINPLINELEN   204  /* add cr, lf, double zero termination */
 #ifndef MOLFILEMAXLINELEN

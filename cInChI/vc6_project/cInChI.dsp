@@ -42,8 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /I "../common" /I "../main" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /W3 /GX /Ox /I "../common" /I "../main" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -209,6 +208,14 @@ SOURCE=..\common\ichitaut.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\common\ikey_base26.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\common\ikey_dll.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\main\mol2atom.c
 # End Source File
 # Begin Source File
@@ -222,6 +229,10 @@ SOURCE=..\main\readmol.c
 # Begin Source File
 
 SOURCE=..\common\runichi.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\common\sha2.c
 # End Source File
 # Begin Source File
 
@@ -313,6 +324,18 @@ SOURCE=..\common\ichitaut.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\common\ikey_base26.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\common\inchi_api.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\common\incomdef.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\common\inpdef.h
 # End Source File
 # Begin Source File
@@ -330,6 +353,10 @@ SOURCE=..\main\mol2atom.h
 # Begin Source File
 
 SOURCE=..\main\readmol.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\common\sha2.h
 # End Source File
 # Begin Source File
 

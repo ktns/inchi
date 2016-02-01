@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,9 +23,11 @@
 #include <stdarg.h>
 
 #include "e_mode.h"
-#include "ichitime.h"
-#include "inchi_api.h"
 #include "e_ctl_data.h"
+
+#include "inchi_api.h"
+
+#include "ichitime.h"
 
 #include "e_comdef.h"
 #include "e_ichicomp.h"
@@ -117,6 +126,64 @@ int e_my_fprintf( FILE* f, const char* lpszFormat, ... )
 
     return ret? ret : ret2;
 }
+
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+int e_my_fileprintf( FILE* f, const char* lpszFormat, ... )
+{
+    int ret=0, ret2=0;
+    va_list argList;
+
+
+
+
+    if ( f ) {
+        if ( f == stderr && lpszFormat && lpszFormat[0] && '\r' == lpszFormat[strlen(lpszFormat)-1] ) {
+#define CONSOLE_LINE_LEN 80
+
+#ifndef INCHI_ANSI_ONLY
+            char szLine[CONSOLE_LINE_LEN];
+            my_va_start( argList, lpszFormat );
+            ret = _vsnprintf( szLine, CONSOLE_LINE_LEN-1, lpszFormat, argList );
+            va_end( argList );
+            if ( ret < 0 ) {
+                /*  output is longer than the console line */
+                strcpy(szLine+CONSOLE_LINE_LEN-4, "...\r");
+            }
+            fputs( szLine, f );
+#else
+            my_va_start( argList, lpszFormat );
+            ret = vfprintf( f, lpszFormat, argList );
+            va_end( argList );
+#endif
+
+#undef CONSOLE_LINE_LEN
+        } else {
+            my_va_start( argList, lpszFormat );
+            ret = vfprintf( f, lpszFormat, argList );
+            va_end( argList );
+        }
+    }
+    if ( f && f != stderr ) { /* disabled stderr output in case f == NULL. 11-23-2005 */
+        my_va_start( argList, lpszFormat );
+        ret2 = vfprintf( stderr, lpszFormat, argList );
+        va_end( argList );
+    }
+
+    if ( f ) {
+        my_va_start( argList, lpszFormat );
+        ret = vfprintf( f, lpszFormat, argList );
+        va_end( argList );
+    }
+
+    return ret? ret : ret2;
+}
+
+
+
+
 /*******************************************************************/
 void e_PrintFileName( const char *fmt, FILE *output_file, const char *szFname )
 {

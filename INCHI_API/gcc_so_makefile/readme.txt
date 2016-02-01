@@ -1,17 +1,24 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 This makefile was tested with
 gcc version 3.4.2 (mingw-special)
-under Win2k SP4
-and gcc version 4.1.0 20060304 (Red Hat 4.1.0-3)
-under Fedora Core 5
+under WinXP Pro SP2
+and gcc version 4.1.2 20070502 (Red Hat 4.1.2-12)
+under Fedora Core 7
 
 Linux note:
 =============
@@ -28,6 +35,8 @@ the shared library which otherewise would produce this message:
  cannot restore segment prot after reloc: Permission denied"
 
 under SELinux default settings.
+
+Note: it may be necessary to copy symlink  libinchi.so.1 to /usr/lib.
 
 General
 =========
@@ -75,19 +84,19 @@ Under Linux the makefile creates:
 =================================
  main_inchi           -- the main program (InChI software library testing
                          application) and
- libinchi.so.1.01.00  -- the shared object and a link libinchi.so.1 to it
+ libinchi.so.1.02.00  -- the shared object and a link libinchi.so.1 to it
  libinchi.so.1        -- a symbolic link to libinchi.so.1.01.00
 
 in the "result" subdirectory of this makefile directory out of source
 code located in "INCHI_DLL" and "INCHI_MAIN" directories.
 
-Files result/libinchi.so.1.01.00.gz and result/main_inchi.gz
+Files result/libinchi.so.1.02.00.gz and result/main_inchi.gz
 contain Linux 1386 binaries created with the included makefile.
 
 The InChI software library testing application, main_inchi, needs
-libinchi.so.1, a symbolic link to libinchi.so.1.01.00.
+libinchi.so.1, a symbolic link to libinchi.so.1.02.00.
 
-Under Fedora Core 5 the shared object libinchi.so.1.01.00 created
+Under Fedora Core 5 the shared object libinchi.so.1.02.00 created
 without ISLINUX=1 may not load unless you do the following if you
 have not already done so:
 
@@ -100,8 +109,3 @@ to open it and tick the check box next to
 To use function times() instead of clock()
 for detecting timeout remove -ansi compiler
 option and add option -DINCHI_USETIMES
-
-Files in the "result" subdirectory were created with
-gcc version 4.1.0 20060304 (Red Hat 4.1.0-3) under Fedora Core 5
-with glibc-2.4-4 and glibc-kernheaders-3.0-5.2
-

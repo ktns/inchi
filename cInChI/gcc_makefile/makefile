@@ -56,6 +56,9 @@ INCHI_SRCS = $(P_LIBR)/ichican2.c  $(P_LIBR)/ichiprt1.c \
              $(P_MAIN)/dispstru.c  $(P_MAIN)/mol2atom.c \
              $(P_MAIN)/readinch.c \
              $(P_MAIN)/ichimain.c  $(P_MAIN)/readmol.c  \
+             $(P_LIBR)ikey_dll.c       $(P_LIBR)ikey_base26.c  \
+             $(P_LIBR)sha2.c             
+
 
 INCHI_OBJS = ichican2.o  ichiprt1.o \
              ichicano.o  ichiprt2.o \
@@ -77,6 +80,8 @@ INCHI_OBJS = ichican2.o  ichiprt1.o \
              dispstru.o  mol2atom.o \
              readinch.o \
              ichimain.o  readmol.o  \
+             ikey_dll.o       ikey_base26.o  \
+             sha2.o
 
 
 
