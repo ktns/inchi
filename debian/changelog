@@ -1,0 +1,5 @@
+libinchi1 (1.01-0) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Katsuhiko Nishimra <ktns.87@gmail.com>  Tue, 02 Feb 2016 01:20:30 +0900
