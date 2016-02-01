@@ -3,20 +3,20 @@ Priority: optional
 Maintainer: Katsuhiko Nishimra <ktns.87@gmail.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
-Section: libs
-Homepage: <insert the upstream URL, if relevant>
+Section: science
+Homepage: http://www.inchi-trust.org/
 #Vcs-Git: git://anonscm.debian.org/collab-maint/libinchi1.git
 #Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/libinchi1.git
 
 Package: libinchi1-dev
+Provides: libinchi-dev
 Section: libdevel
 Architecture: any
-Depends: libinchi1BROKEN (= ${binary:Version}), ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: libinchi1 (= ${binary:Version}), ${misc:Depends}
+Description: International Chemical Identifier (InChI) generator (libdevel)
 
-Package: libinchi1BROKEN
+Package: libinchi1
+Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: International Chemical Identifier (InChI) generator
