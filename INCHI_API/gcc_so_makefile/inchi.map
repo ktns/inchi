@@ -1,0 +1,4 @@
+{
+global: FreeINCHI; FreeStructFromINCHI; Free_inchi_Input; GetINCHI; GetINCHIfromINCHI; GetStringLength; GetStructFromINCHI; Get_inchi_Input_FromAuxInfo;
+local: *;
+};

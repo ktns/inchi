@@ -1,0 +1,11 @@
+LIBRARY
+    libinchi.dll
+EXPORTS
+    GetINCHI
+    FreeINCHI
+    GetStringLength
+    Get_inchi_Input_FromAuxInfo
+    Free_inchi_Input
+    GetStructFromINCHI
+    FreeStructFromINCHI
+    GetINCHIfromINCHI

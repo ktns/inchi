@@ -1,0 +1,23 @@
+; With gcc under Win32 this produces same exported naes, ordinal numbers, and
+; calling conventions as libinchi.dll produced by the MS VC++ 6.0 project
+LIBRARY
+    libinchi.dll
+EXPORTS
+; -- Exported name -------------------  Internal name ---------------- ordinal
+     FreeINCHI                        = FreeINCHI                           @1
+     Free_inchi_Input                 = Free_inchi_Input                    @2
+     GetINCHI                         = GetINCHI                            @3
+     GetStringLength                  = GetStringLength                     @4
+     Get_inchi_Input_FromAuxInfo      = Get_inchi_Input_FromAuxInfo         @5
+     GetStructFromINCHI               = GetStructFromINCHI                  @6
+     FreeStructFromINCHI              = FreeStructFromINCHI                 @7
+     GetINCHIfromINCHI                = GetINCHIfromINCHI                   @8
+; ----------------- Pascal/stdcall calling convenions ------------------------
+     _FreeINCHI@4                     = pasc_FreeINCHI@4                    @9
+     _FreeStructFromINCHI@4           = pasc_FreeStructFromINCHI@4          @10
+     _Free_inchi_Input@4              = pasc_Free_inchi_Input@4             @11
+     _GetINCHI@8                      = pasc_GetINCHI@8                     @12
+     _GetINCHIfromINCHI@8             = pasc_GetINCHIfromINCHI@8            @13
+     _GetStringLength@4               = pasc_GetStringLength@4              @14
+     _GetStructFromINCHI@8            = pasc_GetStructFromINCHI@8           @15
+     _Get_inchi_Input_FromAuxInfo@12  = pasc_Get_inchi_Input_FromAuxInfo@12 @16

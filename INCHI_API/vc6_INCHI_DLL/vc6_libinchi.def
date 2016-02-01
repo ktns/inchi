@@ -1,0 +1,20 @@
+LIBRARY  libinchi
+EXPORTS
+;    Exported name (cdecl)              Internal name                ordinal
+     FreeINCHI                        = cdecl_FreeINCHI                   @1
+     Free_inchi_Input                 = cdecl_Free_inchi_Input            @2        
+     GetINCHI                         = cdecl_GetINCHI                    @3
+     GetStringLength                  = cdecl_GetStringLength             @4       
+     Get_inchi_Input_FromAuxInfo      = cdecl_Get_inchi_Input_FromAuxInfo @5
+     GetStructFromINCHI               = cdecl_GetStructFromINCHI          @6
+     FreeStructFromINCHI              = cdecl_FreeStructFromINCHI         @7
+     GetINCHIfromINCHI                = cdecl_GetINCHIfromINCHI           @8
+;    dll_exported names(stdcall)
+;    _FreeINCHI@4                      = _FreeINCHI@4                      @9
+;    _FreeStructFromINCHI@4            = _FreeStructFromINCHI@4            @10
+;    _Free_inchi_Input@4               = _Free_inchi_Input@4               @11
+;    _GetINCHI@8                       = _GetINCHI@8                       @12
+;    _GetINCHIfromINCHI@8              = _GetINCHIfromINCHI@8              @13
+;    _GetStringLength@4                = _GetStringLength@4                @14
+;    _GetStructFromINCHI@8             = _GetStructFromINCHI@8             @15
+;    _Get_inchi_Input_FromAuxInfo@12   = _Get_inchi_Input_FromAuxInfo@12   @16
