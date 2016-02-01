@@ -1,0 +1,9 @@
+libinchi.so.1 libinchi1 #MINVER#
+ FreeINCHI@Base 1.01
+ FreeStructFromINCHI@Base 1.01
+ Free_inchi_Input@Base 1.01
+ GetINCHI@Base 1.01
+ GetINCHIfromINCHI@Base 1.01
+ GetStringLength@Base 1.01
+ GetStructFromINCHI@Base 1.01
+ Get_inchi_Input_FromAuxInfo@Base 1.01
