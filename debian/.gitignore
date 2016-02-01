@@ -1,0 +1,11 @@
+/.debhelper/
+/debhelper-build-stamp
+/files
+/libinchi1-dev.debhelper.log
+/libinchi1-dev.substvars
+/libinchi1-dev/
+/libinchi1.debhelper.log
+/libinchi1.substvars
+/libinchi1/
+/results/
+/tmp/
