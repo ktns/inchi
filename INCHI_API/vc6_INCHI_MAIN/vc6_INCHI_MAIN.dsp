@@ -42,8 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /FD /c
-# SUBTRACT CPP /Fr /YX
+# ADD CPP /W3 /GX /Ox /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "INCHI_LINK_AS_DLL" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -107,6 +106,10 @@ SOURCE=..\INCHI_MAIN\e_ichimain.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\INCHI_MAIN\e_ichimain_a.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\INCHI_MAIN\e_inchi_atom.c
 # End Source File
 # Begin Source File
@@ -133,10 +136,6 @@ SOURCE=..\INCHI_MAIN\e_util.c
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=..\INChI_DLL\aux2atom.h
-# End Source File
 # Begin Source File
 
 SOURCE=..\INChI_MAIN\e_0Dstereo.h
@@ -192,10 +191,6 @@ SOURCE=..\INChI_MAIN\e_readstru.h
 # Begin Source File
 
 SOURCE=..\INChI_MAIN\e_util.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\INChI_DLL\ichiparm.h
 # End Source File
 # Begin Source File
 

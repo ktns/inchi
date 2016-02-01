@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #if( defined( WIN32 ) && defined( _CONSOLE ) && defined(_MSC_VER) && _MSC_VER >= 800 )
 #define ADD_WIN_CTLC   /* detect Ctrl-C under Win-32 and Microsoft Visual C ++ */
@@ -20,7 +27,7 @@
 /* in case of CREATE_0D_PARITIES, the hardcoded bFixSp3Bug = 1 fixes sp3 bugs in original InChI v. 1.00  */
 /* in case of CREATE_0D_PARITIES, the Phosphine and Arsine sp3 stereo options are not supported */
 
-/* #define MAKE_INCHI_FROM_AUXINFO */ /* uncomment to create the second InChI out of AuxInfo and compare */
+/* #define MAKE_INCHI_FROM_AUXINFO */  /* uncomment to create the second InChI out of AuxInfo and compare */
 #define INCHI_TO_STRUCTURE            /* uncomment to convert Struct->InChI->Struct->InChI in case of /Inchi2Struct option */
 #define NEIGH_ONLY_ONCE               /* comment out to include each bond in both neighboring atoms adjacency lists */
 #define INCHI_TO_INCHI                /* uncomment to test /InChI2InChI option */
@@ -36,6 +43,13 @@
 #include <float.h>
 
 #include "e_mode.h"
+
+#ifndef CREATE_INCHI_STEP_BY_STEP
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Use old (classic) library interface (see main() below)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
 #include "inchi_api.h"
 #include "e_inchi_atom.h"
 #include "e_ctl_data.h"
@@ -48,6 +62,8 @@
 #ifdef CREATE_0D_PARITIES
 #include "e_0dstereo.h"
 #endif
+
+
 
 int e_MakeOutputHeader( char *pSdfLabel, char *pSdfValue, long lSdfId, long num_inp, char *pStr1, char *pStr2 );
 char *e_GetChiralFlagString( int bChiralFlagOn );
@@ -177,6 +193,10 @@ int main( int argc, char *argv[ ] )
     int  num_repeat = REPEAT_ALL;
 #endif
 
+/*^^^ New: using InChIKey API */
+char ik_string[256];    /*^^^ Resulting InChIkey string */
+int ik_ret=0;           /*^^^ InChIKey calculation result code */
+/*^^^ */
 
 #if( TRACE_MEMORY_LEAKS == 1 )
     _CrtSetDbgFlag(_CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
@@ -593,6 +613,7 @@ repeat:
 
                 /* Make InChI out of InChI input out of AuxInfo */
                 pInp2->szOptions = pInp->szOptions;
+                /* pInp2->szOptions =" /OutputSDF"; */
                 memset( pOut2, 0, sizeof(*pOut2) );
                 nRet2 = GetINCHI( pInp2, pOut2 );
                 /* Compare the two InChI */
@@ -708,6 +729,43 @@ repeat:
                 if ( bAuxInfo ) {
                     e_inchi_print( output_file, "%s\n",pOut->szAuxInfo );
                 }
+
+                /*^^^ Calculate InChIKey */
+                if ( ip->bCalcInChIKey== 1 ) 
+                {   
+                    ik_ret = GetINCHIKeyFromINCHI(pOut->szInChI, ik_string);                     
+
+                    if (ik_ret==INCHIKEY_OK)    
+                        e_inchi_print(output_file, "InChIKey=%-s\n",ik_string);
+                    else    
+                    {
+                        e_my_fprintf(log_file, "Warning: could not compute InChIKey for #%-d ", 
+                                     num_inp );
+                        switch(ik_ret)
+                        {
+                        case INCHIKEY_UNKNOWN_ERROR :
+                                e_my_fprintf(log_file, "(invalid key length requested)\n");
+                                break;
+                        case INCHIKEY_EMPTY_INPUT:
+                                e_my_fprintf(log_file, "(got an empty string)\n");
+                                break;
+                        case INCHIKEY_NOT_INCHI_INPUT:
+                                e_my_fprintf(log_file, "(got non-InChI string)\n");
+                                break;
+                        case INCHIKEY_NOT_ENOUGH_MEMORY:
+                                e_my_fprintf(log_file, "(not enough memory to treat the string)\n");
+                                break;
+                        case INCHIKEY_ERROR_IN_FLAG_CHAR:
+                                e_my_fprintf(log_file, "(detected error in flag character)\n");
+                                break;
+                        default:e_my_fprintf(log_file, "(internal program error)\n");
+                                break;
+                        }
+                    }
+
+                }
+
+
             }
         }
     }
@@ -799,3 +857,4 @@ char *e_GetChiralFlagString( int bChiralFlagOn )
 }
 
 
+#endif /*^^^ CREATE_INCHI_STEP_BY_STEP */

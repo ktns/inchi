@@ -43,8 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /FD /c
-# SUBTRACT CPP /Fr /YX
+# ADD CPP /MT /W3 /GX /Ox /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -71,8 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /Fr /FD /GZ /c
-# SUBTRACT CPP /YX
+# ADD CPP /MTd /W3 /Gm /GX /ZI /Od /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "INCHI_LINK_AS_DLL" /Fr /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -212,7 +210,23 @@ SOURCE=..\INCHI_DLL\ichitaut.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\INCHI_DLL\ikey_base26.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\INCHI_DLL\ikey_dll.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\INCHI_DLL\inchi_dll.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\INCHI_DLL\inchi_dll_a.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\INCHI_DLL\inchi_dll_a2.c
 # End Source File
 # Begin Source File
 
@@ -221,6 +235,10 @@ SOURCE=..\INCHI_DLL\inchi_dll_main.c
 # Begin Source File
 
 SOURCE=..\INCHI_DLL\runichi.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\INCHI_DLL\sha2.c
 # End Source File
 # Begin Source File
 
@@ -241,10 +259,6 @@ SOURCE=.\vc6_libinchi.def
 # Begin Source File
 
 SOURCE=..\INChI_DLL\aux2atom.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\INChI_DLL\comdef.h
 # End Source File
 # Begin Source File
 
@@ -324,11 +338,15 @@ SOURCE=..\INCHI_DLL\ichitime.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\INCHI_DLL\ikey_base26.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\INChI_DLL\inchi_api.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\INChI_DLL\inchi_dll.h
+SOURCE=..\INCHI_DLL\inchi_dll_a.h
 # End Source File
 # Begin Source File
 
@@ -340,11 +358,19 @@ SOURCE=..\INCHI_DLL\inchicmp.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\INCHI_DLL\incomdef.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\INChI_DLL\inpdef.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\INChI_DLL\mode.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\INCHI_DLL\sha2.h
 # End Source File
 # Begin Source File
 

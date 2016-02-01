@@ -9,3 +9,12 @@ EXPORTS
     GetStructFromINCHI
     FreeStructFromINCHI
     GetINCHIfromINCHI
+    GetINCHIKeyFromINCHI
+    CheckINCHIKey
+    INCHIGEN_Create
+    INCHIGEN_Setup
+    INCHIGEN_DoNormalization
+    INCHIGEN_DoCanonicalization
+    INCHIGEN_DoSerialization
+    INCHIGEN_Reset
+    INCHIGEN_Destroy

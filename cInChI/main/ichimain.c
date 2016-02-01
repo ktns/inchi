@@ -1,11 +1,18 @@
 /*
- * International Union of Pure and Applied Chemistry (IUPAC)
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.01
- * July 21, 2006
+ * Software version 1.02-beta
+ * August 23, 2007
  * Developed at NIST
+ *
+ * The InChI library and programs are free software developed under the
+ * auspices of the International Union of Pure and Applied Chemistry (IUPAC);
+ * you can redistribute this software and/or modify it under the terms of 
+ * the GNU Lesser General Public License as published by the Free Software 
+ * Foundation:
+ * http://www.opensource.org/licenses/lgpl-license.php
  */
+
 
 #include "mode.h"
 
@@ -43,6 +50,15 @@
 #if( ADD_CMLPP == 1 )
 #include "readcml.hpp"
 #endif
+
+/*^^^ */
+#ifdef BUILD_CINCHI_WITH_INCHIKEY
+#include "inchi_api.h"
+#define FLUSH_OUT do{if (pout->pStr){if (pout->nUsedLength>0)fprintf(output_file,"%-s",pout->pStr); inchi_free(pout->pStr );memset(pout,0, sizeof(*pout));}}while (0)
+#define FLUSH_LOG do{if (plog->pStr){if (plog->nUsedLength>0)my_fileprintf(log_file,"%-s",plog->pStr); inchi_free(plog->pStr );memset(plog,0, sizeof(*plog));}}while (0)
+void extract_inchi_substring(char ** buf, char *str, size_t slen);
+#endif
+/*^^^ */
 
 /*  console-specific */
 #ifndef INCHI_ANSI_ONLY
@@ -151,7 +167,18 @@ int main( int argc, char *argv[ ] )
 
     STRUCT_DATA struct_data;
     STRUCT_DATA *sd = &struct_data;
-    FILE *inp_file = NULL, *output_file = NULL, *log_file = NULL, *prb_file = NULL;
+    FILE *inp_file = NULL;
+
+/*^^^ */
+#ifdef BUILD_CINCHI_WITH_INCHIKEY
+    INCHI_OUTPUT outputstr, logstr;
+    INCHI_OUTPUT *pout=&outputstr, *plog = &logstr;
+    char ik_string[256];    /*^^^ Resulting InChIKey string */
+    int ik_ret=0;           /*^^^ InChIKey-calc result code */
+
+#endif
+    FILE *output_file = NULL, *log_file = NULL, *prb_file = NULL;
+
     char szTitle[MAX_SDF_HEADER+MAX_SDF_VALUE+256];
     /* long rcPict[4] = {0,0,0,0}; */
 
@@ -235,6 +262,11 @@ repeat:
     num_output = 0;
     sd->bUserQuit  = 0;
 
+#ifdef BUILD_CINCHI_WITH_INCHIKEY
+    memset( pout, 0, sizeof(*pout) );
+    memset( plog, 0, sizeof(*plog) );
+#endif
+
 #if( defined( _WIN32 ) && defined( _CONSOLE ) && !defined( INCHI_ANSI_ONLY ) )
     if ( SetConsoleCtrlHandler( MyHandlerRoutine, 1 ) ) {
         ConsoleQuit = WasInterrupted;
@@ -244,7 +276,17 @@ repeat:
 
     if ( argc == 1 || argc==2 && ( argv[1][0]==INCHI_OPTION_PREFX ) &&
         (!strcmp(argv[1]+1, "?") || !stricmp(argv[1]+1, "help") ) ) {
+
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         HelpCommandLineParms(stdout);
+#else
+        HelpCommandLineParms(plog); 
+        if (plog->pStr)
+        {
+            if (plog->nUsedLength>0)
+                { fprintf(stdout,"%-s",plog->pStr); inchi_free(plog->pStr ); memset(plog,0, sizeof(*plog)); }
+        }      
+#endif
         return 0;
     }
     /*  original input structure */
@@ -261,7 +303,12 @@ repeat:
     memset( szSdfDataValue    , 0, sizeof( szSdfDataValue    ) );
 
     /* explicitly cast to (const char **) to avoid a warning about "incompatible pointer type":*/
+    
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
     if ( 0 > ReadCommandLineParms( argc, (const char **)argv, ip, szSdfDataValue, &ulDisplTime, bReleaseVersion, stderr ) ) {
+#else
+    if ( 0 > ReadCommandLineParms( argc, (const char **)argv, ip, szSdfDataValue, &ulDisplTime, bReleaseVersion, plog) ) {
+#endif
         goto exit_function;
     }
     if ( !OpenFiles( &inp_file, &output_file, &log_file, &prb_file, ip ) ) {
@@ -279,9 +326,19 @@ repeat:
         if ( !ip->pSdfValue )
             ip->pSdfValue  = szSdfDataValue;
     }
+
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
     PrintInputParms( log_file, ip );
+#else
+    PrintInputParms( plog, ip ); FLUSH_LOG;
+#endif
+
     if ( !(pStr = (char*)inchi_malloc(nStrLen))) {
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         my_fprintf( log_file, "Cannot allocate output buffer. Terminating\n");
+#else
+        my_fprintf( plog, "Cannot allocate output buffer. Terminating\n"); FLUSH_LOG;
+#endif
         goto exit_function;
     }
     pStr[0] = '\0';
@@ -289,7 +346,12 @@ repeat:
 #if( READ_INCHI_STRING == 1 )
     if ( ip->nInputType == INPUT_INCHI ) {
         memset( sd, 0, sizeof(*sd) );
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         ReadWriteInChI( inp_file, output_file, log_file, ip,  sd, NULL, NULL, NULL, 0, NULL);
+#else
+        ReadWriteInChI( inp_file, output_file, log_file, pout, plog, ip,  sd, NULL, NULL, NULL, 0, NULL);
+        FLUSH_LOG;
+#endif
         ulTotalProcessingTime = sd->ulStructTime;
         num_inp               = sd->fPtrStart;
         num_err               = sd->fPtrEnd;
@@ -320,8 +382,15 @@ repeat:
         }
 
         /*  read one structure from input and display optionally it */
+
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         nRet = GetOneStructure( sd, ip, szTitle, inp_file, log_file, output_file, prb_file,
                                 orig_inp_data, &num_inp, pStr, nStrLen, pStructPtrs );
+#else
+        nRet = GetOneStructure( sd, ip, szTitle, inp_file, plog, pout, prb_file,
+                                orig_inp_data, &num_inp, pStr, nStrLen, pStructPtrs );
+        FLUSH_LOG; 
+#endif
 
         if ( pStructPtrs ) {
             pStructPtrs->cur_fptr ++;
@@ -343,11 +412,22 @@ repeat:
 
         /* create INChI for each connected component of the structure and optionally display them */
         /* output INChI for the whole structure */
+        
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         nRet1 = ProcessOneStructure( sd, ip, szTitle, pINChI, pINChI_Aux,
                                      inp_file, log_file, output_file, prb_file,
                                      orig_inp_data, prep_inp_data,
-                                     num_inp, pStr, nStrLen );
-        
+                                     num_inp, pStr, nStrLen ); 
+#else
+        nRet1 = ProcessOneStructure( sd, ip, szTitle, pINChI, pINChI_Aux,
+                                     inp_file, plog, pout, prb_file,
+                                     orig_inp_data, prep_inp_data,
+                                     num_inp, pStr, nStrLen );        
+
+        FLUSH_LOG;
+
+#endif
+
         /*  free INChI memory */
         FreeAllINChIArrays( pINChI, pINChI_Aux, sd->num_components );
         /* free structure data */
@@ -365,25 +445,92 @@ repeat:
             num_err ++;
             continue;
         }
+
+#ifdef BUILD_CINCHI_WITH_INCHIKEY
+        if (ip->bCalcInChIKey)
+        {
+            char *buf = NULL;
+
+            size_t slen = pout->nUsedLength;
+            extract_inchi_substring(&buf, pout->pStr, slen);
+            if (NULL!=buf)
+            {
+                ik_ret = GetINCHIKeyFromINCHI(buf, ik_string);                     
+                inchi_free(buf);
+            }
+            else
+                ik_ret = INCHIKEY_NOT_INCHI_INPUT;                     
+        
+            if (ik_ret==INCHIKEY_OK)   
+            {
+                inchi_print(pout, "InChIKey=%-s\n",ik_string);
+            }
+            else    
+            {
+                inchi_print(plog, "Warning (Could not compute InChIKey: ", num_inp);
+                switch(ik_ret)
+                {
+                case INCHIKEY_UNKNOWN_ERROR:
+                        inchi_print(plog, "unresolved error)");
+                        break;
+                case INCHIKEY_EMPTY_INPUT:
+                        inchi_print(plog,  "got an empty string)");
+                        break;
+                case INCHIKEY_NOT_INCHI_INPUT:
+                        inchi_print(plog, "got non-InChI string)");
+                        break;
+                case INCHIKEY_NOT_ENOUGH_MEMORY:
+                        inchi_print(plog, "not enough memory to treat the string)");
+                        break;
+                case INCHIKEY_ERROR_IN_FLAG_CHAR:
+                        inchi_print(plog, "detected error in flag character)");
+                        break;
+                default:inchi_print(plog, "internal program error)");
+                        break;
+                }
+                inchi_print(plog, " structure #%-lu.\n", num_inp);
+            }
+            FLUSH_OUT;
+            FLUSH_LOG;
+        }
+        else
+        {
+            FLUSH_OUT;
+        }
+#endif
+
    /*   --- debug only ---
         if ( pStructPtrs->cur_fptr > 5 ) {
             pStructPtrs->cur_fptr = 5;
         }
    */
 
+
+            
     }
 
 exit_function:
     if ( (ip->bINChIOutputOptions & INCHI_OUT_XML) && sd->bXmlStructStarted > 0 ) {
-        if ( !OutputINChIXmlStructEndTag( output_file, pStr, nStrLen, 1 ) ) {
-            my_fprintf( log_file, "Cannot create end xml tag for structure #%ld.%s%s%s%s Terminating.\n", num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue) );
+
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
+            if ( !OutputINChIXmlStructEndTag( output_file, pStr, nStrLen, 1 ) ) {
+                my_fprintf( log_file, "Cannot create end xml tag for structure #%ld.%s%s%s%s Terminating.\n", num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue) );
+#else
+            if ( !OutputINChIXmlStructEndTag( pout,  pStr, nStrLen, 1 ) ) {
+                my_fprintf( plog, "Cannot create end xml tag for structure #%ld.%s%s%s%s Terminating.\n", num_inp, SDF_LBL_VAL(ip->pSdfLabel,ip->pSdfValue) );
+                FLUSH_LOG;
+#endif
             sd->bXmlStructStarted = -1; /*  do not repeat same message */
         }
     }
 
 
     if ( (ip->bINChIOutputOptions & INCHI_OUT_XML) && ip->bXmlStarted ) {
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         OutputINChIXmlRootEndTag( output_file );
+#else
+        OutputINChIXmlRootEndTag( pout ); FLUSH_OUT;
+#endif
         ip->bXmlStarted = 0;
     }
 
@@ -421,10 +568,18 @@ exit_function:
     {
         int hours, minutes, seconds, mseconds;
         SplitTime( ulTotalProcessingTime, &hours, &minutes, &seconds, &mseconds );
+#ifndef BUILD_CINCHI_WITH_INCHIKEY
         my_fprintf( log_file, "Finished processing %ld structure%s: %ld error%s, processing time %d:%02d:%02d.%02d\n",
                                 num_inp, num_inp==1?"":"s",
                                 num_err, num_err==1?"":"s",
+                                hours, minutes, seconds,mseconds/10); 
+#else
+        my_fprintf( plog, "Finished processing %ld structure%s: %ld error%s, processing time %d:%02d:%02d.%02d\n",
+                                num_inp, num_inp==1?"":"s",
+                                num_err, num_err==1?"":"s",
                                 hours, minutes, seconds,mseconds/10);
+        FLUSH_LOG;
+#endif
     }
     if ( log_file && log_file != stderr ) {
         fclose( log_file );
@@ -452,8 +607,47 @@ exit_function:
     }
 #endif
 
-
+#ifdef BUILD_CINCHI_WITH_INCHIKEY
+    if ( pout->pStr )    
+        inchi_free( pout->pStr ); 
+    if ( plog->pStr )    
+        inchi_free( plog->pStr ); 
+#endif
+    
     return 0;
 }
 
+
+
+void extract_inchi_substring(char ** buf, char *str, size_t slen)
+{
+size_t n;
+char *p, *pp;
+   
+    *buf = NULL;
+
+    p = strstr(str, "InChI=");
+    if (NULL==p)
+        return;
+    
+    pp = strchr( p, '\n' );
+    if (NULL==pp)
+    {
+        pp = strchr( p, '\0' );
+    }
+    if (NULL==pp)
+        return;
+
+    n = (pp-p)/sizeof(char);
+
+    
+    *buf = inchi_calloc(n+1, sizeof(char));
+    memcpy(*buf, p, n);
+    (*buf)[n] = '\0';
+
+    return;
+}
+
 #endif  /* ifndef INCHI_LIB */
+
+
