@@ -1,11 +1,11 @@
 /.debhelper/
 /debhelper-build-stamp
 /files
-/libstdinchi1-dev.debhelper.log
-/libstdinchi1-dev.substvars
-/libstdinchi1-dev/
-/libstdinchi1.debhelper.log
-/libstdinchi1.substvars
-/libstdinchi1/
+/libinchi1-dev.debhelper.log
+/libinchi1-dev.substvars
+/libinchi1-dev/
+/libinchi1.debhelper.log
+/libinchi1.substvars
+/libinchi1/
 /results/
 /tmp/

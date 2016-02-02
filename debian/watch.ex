@@ -11,29 +11,29 @@ version=4
 
 # HTTP site (basic)
 #http://example.com/downloads.html \
-#  files/libstdinchi1-([\d\.]+)\.tar\.gz debian uupdate
+#  files/libinchi1-([\d\.]+)\.tar\.gz debian uupdate
 
 # Uncommment to examine a FTP server
-#ftp://ftp.example.com/pub/libstdinchi1-(.*)\.tar\.gz debian uupdate
+#ftp://ftp.example.com/pub/libinchi1-(.*)\.tar\.gz debian uupdate
 
 # SourceForge hosted projects
-# http://sf.net/libstdinchi1/ libstdinchi1-(.*)\.tar\.gz debian uupdate
+# http://sf.net/libinchi1/ libinchi1-(.*)\.tar\.gz debian uupdate
 
 # GitHub hosted projects
 #opts="filenamemangle="s%(?:.*?)?v?(\d[\d.]*)\.tar\.gz%<project>-$1.tar.gz%" \
-#   https://github.com/<user>/libstdinchi1/tags \
+#   https://github.com/<user>/libinchi1/tags \
 #   (?:.*?/)?v?(\d[\d.]*)\.tar\.gz debian uupdate
 
 # PyPI
-# https://pypi.python.org/packages/source/<initial>/libstdinchi1/ \
-#   libstdinchi1-(.+)\.tar\.gz debian uupdate
+# https://pypi.python.org/packages/source/<initial>/libinchi1/ \
+#   libinchi1-(.+)\.tar\.gz debian uupdate
 
 # Direct Git
-# opts="mode=git" http://git.example.com/libstdinchi1.git \
+# opts="mode=git" http://git.example.com/libinchi1.git \
 #   refs/tags/v([\d\.]+) debian uupdate
 
 
 
 
 # Uncomment to find new files on GooglePages
-# http://example.googlepages.com/foo.html libstdinchi1-(.*)\.tar\.gz
+# http://example.googlepages.com/foo.html libinchi1-(.*)\.tar\.gz
