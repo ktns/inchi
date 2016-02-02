@@ -1,9 +1,18 @@
 libinchi.so.1 libinchi1 #MINVER#
+ CheckINCHIKey@Base 1.02~b
  FreeINCHI@Base 1.01
  FreeStructFromINCHI@Base 1.01
  Free_inchi_Input@Base 1.01
  GetINCHI@Base 1.01
+ GetINCHIKeyFromINCHI@Base 1.02~b
  GetINCHIfromINCHI@Base 1.01
  GetStringLength@Base 1.01
  GetStructFromINCHI@Base 1.01
  Get_inchi_Input_FromAuxInfo@Base 1.01
+ INCHIGEN_Create@Base 1.02~b
+ INCHIGEN_Destroy@Base 1.02~b
+ INCHIGEN_DoCanonicalization@Base 1.02~b
+ INCHIGEN_DoNormalization@Base 1.02~b
+ INCHIGEN_DoSerialization@Base 1.02~b
+ INCHIGEN_Reset@Base 1.02~b
+ INCHIGEN_Setup@Base 1.02~b
