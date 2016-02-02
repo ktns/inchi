@@ -3,7 +3,7 @@ Upstream-Name: INCHI-1-API
 Source: http://www.inchi-trust.org/downloads/
 
 Files: *
-Copyright: 2007 NIST
+Copyright: 2010 NIST, IUPAC and InChI Trust
 License: LGPL-2.1+
 
 Files: INCHI_API/INCHI_DLL/sha2.c INCHI_API/INCHI_DLL/sha2.h cInChI/common/sha2.c cInChI/common/sha2.h
