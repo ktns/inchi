@@ -2,7 +2,7 @@
  * International Chemical Identifier (InChI)
  * Version 1
  * Software version 1.02
- * January 10, 2009
+ * October 31, 2008
  * Developed at NIST
  *
  * The InChI library and programs are free software developed under the
@@ -14,10 +14,25 @@
  */
 
 
-The portion of this distribution, the files sha2.c and sha2.h
-are Copyright (C) 2003-2006  Christophe Devine and are distributed under 
-the terms of the GNU Lesser General Public  License, version 2.1 
-as published by the Free Software Foundation (see heading comments in
-these files).
+#ifndef __0DSTEREO_H__
+#define __0DSTEREO_H__
 
-LGPL text is included (the file LICENSE) in this distribution.
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+extern "C" {
+#endif
+#endif
+
+
+int Clear3D2Dstereo(inchi_Input *pInp);
+int set_0D_stereo_parities( inchi_Input *pInp, int bPointedEdgeStereo );
+
+#ifndef INCHI_ALL_CPP
+#ifdef __cplusplus
+}
+#endif
+#endif
+
+
+#endif /* __0DSTEREO_H__ */

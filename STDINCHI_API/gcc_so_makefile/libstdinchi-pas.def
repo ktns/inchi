@@ -1,0 +1,37 @@
+; With gcc under Win32 this produces same exported names, ordinal numbers, and
+; calling conventions as libstdinchi.dll produced by the MS VC++ 6.0 project
+LIBRARY
+    libstdinchi.dll
+EXPORTS
+; -- Exported name -------------------  Internal name ---------------- ordinal
+     FreeStdINCHI                     = FreeStdINCHI                       @1
+     Free_std_inchi_Input             = Free_std_inchi_Input               @2        
+     GetStdINCHI                      = GetStdINCHI                        @3
+     GetStringLength                  = GetStringLength                    @4       
+     Get_std_inchi_Input_FromAuxInfo  = Get_std_inchi_Input_FromAuxInfo    @5
+     GetStructFromStdINCHI            = GetStructFromStdINCHI              @6
+     FreeStructFromStdINCHI           = FreeStructFromStdINCHI             @7
+     GetStdINCHIKeyFromStdINCHI       = GetStdINCHIKeyFromStdINCHI         @10
+     STDINCHIGEN_Create               = STDINCHIGEN_Create                 @11
+     STDINCHIGEN_Setup                = STDINCHIGEN_Setup                  @12
+     STDINCHIGEN_DoNormalization      = STDINCHIGEN_DoNormalization        @13
+     STDINCHIGEN_DoCanonicalization   = STDINCHIGEN_DoCanonicalization     @14
+     STDINCHIGEN_DoSerialization      = STDINCHIGEN_DoSerialization        @15
+     STDINCHIGEN_Reset                = STDINCHIGEN_Reset                  @16
+     STDINCHIGEN_Destroy              = STDINCHIGEN_Destroy                @17
+; ----------------- Pascal/stdcall calling convenions ------------------------
+     _FreeStdINCHI@4                  = pasc_FreeStdINCHI@4                 @19
+     _FreeStructFromStdINCHI@4        = pasc_FreeStructFromStdINCHI@4       @20
+     _Free_std_inchi_Input@4          = pasc_Free_std_inchi_Input@4         @21
+     _GetStdINCHI@8                   = pasc_GetStdINCHI@8                  @22
+     _GetStdINCHIKeyFromStdINCHI@8    = pasc_GetStdINCHIKeyFromStdINCHI@8   @23
+     _GetStringLength@4               = pasc_GetStringLength@4              @25
+     _GetStructFromStdINCHI@8         = pasc_GetStructFromStdINCHI@8        @26
+     _Get_std_inchi_Input_FromAuxInfo@12  = pasc_Get_std_inchi_Input_FromAuxInfo@12 @27
+     _STDINCHIGEN_Create@0            = pasc_STDINCHIGEN_Create@0           @28
+     _STDINCHIGEN_Destroy@4           = pasc_STDINCHIGEN_Destroy@4          @29
+     _STDINCHIGEN_DoCanonicalization@8   = pasc_STDINCHIGEN_DoCanonicalization@8  @30
+     _STDINCHIGEN_DoNormalization@8      = pasc_STDINCHIGEN_DoNormalization@8     @31
+     _STDINCHIGEN_DoSerialization@12     = pasc_STDINCHIGEN_DoSerialization@12    @32
+     _STDINCHIGEN_Reset@12               = pasc_STDINCHIGEN_Reset@12        @33
+     _STDINCHIGEN_Setup@12            = pasc_STDINCHIGEN_Setup@12           @34
