@@ -25,10 +25,22 @@ This software supports both standard and non-standard InChI/InChIKey.
 *****
 
 
-The portion of this distribution, the files sha2.c and sha2.h
-are Copyright (C) 2003-2006  Christophe Devine and are distributed under 
-the terms of the GNU Lesser General Public  License, version 2.1 
-as published by the Free Software Foundation (see heading comments in
-these files).
+=========
+  FILES 
+=========
 
-LGPL text is included (the file LICENSE) in this distribution.
+readme.txt        This file
+
+libinchi.so.1.03.00.gz
+                  InChI Library - Linux shared object (gzipped; 32bit)
+
+inchi_main.gz     Demo application for Linux (gzipped; 32bit)
+
+
+
+Note
+----
+The InChI software library demo application, inchi_main, 
+needs libinchi.so.1, a symbolic link to libinchi.so.1.03.00.
+This link may be created in the folder containing inchi_main.
+

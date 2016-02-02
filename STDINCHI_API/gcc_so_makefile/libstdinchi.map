@@ -1,5 +1,0 @@
-{
-global: FreeStdINCHI; FreeStructFromStdINCHI; Free_std_inchi_Input; GetStdINCHI; GetStringLength; GetStructFromStdINCHI; Get_std_inchi_Input_FromAuxInfo; GetStdINCHIKeyFromStdINCHI; STDINCHIGEN_Create; STDINCHIGEN_Setup; STDINCHIGEN_DoNormalization; STDINCHIGEN_DoCanonicalization; STDINCHIGEN_DoSerialization; STDINCHIGEN_Reset; STDINCHIGEN_Destroy;
-local: *;
-};
-
