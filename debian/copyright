@@ -17,6 +17,7 @@ Files: debian/*
 Copyright: 2016 Katsuhiko Nishimra <ktns.87@gmail.com>
 License: LGPL-2.1+
 
+Comment: This license is a more permissive version of the GNU LGPL version 2.1.
 License: LGPL-2.1+
  This package is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
