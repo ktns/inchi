@@ -19,7 +19,7 @@ override_dh_auto_build:
 	mkdir -p $(LIB_DIR)
 	make ISLINUX=1 -C $(API_ROOT_DIR)/gcc_so_makefile \
 		C_COMPILER=$(CC) C_OPTIONS="-c $(CPPFLAGS) $(CFLAGS)" \
-		C_MAIN_OPTIONS=-DINCHI_LINK_AS_DLL C_SO_OPTIONS=-fPIC \
+		C_MAIN_OPTIONS=-DBUILD_LINK_AS_DLL C_SO_OPTIONS=-fPIC \
 		LINKER="$(CC) -s $(LDFLAGS)" \
 		SHARED_LINK="$(CC) -shared" SHARED_LINK_PARM=$(LDFLAGS) \
 		LIB_DIR=$(LIB_DIR)
