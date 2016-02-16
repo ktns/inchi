@@ -1,5 +1,5 @@
-libinchi1 (1.04-0) UNRELEASED; urgency=medium
+inchi (1.04-0) UNRELEASED; urgency=medium
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release. (Closes: #814867)
 
  -- Katsuhiko Nishimra <ktns.87@gmail.com>  Tue, 02 Feb 2016 01:20:30 +0900
