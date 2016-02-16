@@ -1,5 +1,8 @@
-inchi (1.04-0) UNRELEASED; urgency=medium
+inchi (1.04-1~1.gbp22d9b8) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @22d9b83785d81d7c756fcdaaf0ac58011ac07c17 **
 
   * Initial release. (Closes: #814867)
+  * UNRELEASED
 
- -- Katsuhiko Nishimra <ktns.87@gmail.com>  Tue, 02 Feb 2016 01:20:30 +0900
+ -- Katsuhiko Nishimra <ktns.87@gmail.com>  Tue, 16 Feb 2016 16:08:03 +0900
