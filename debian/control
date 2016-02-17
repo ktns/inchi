@@ -14,7 +14,7 @@ Section: libdevel
 Architecture: any
 Depends: libinchi1 (= ${binary:Version}), ${misc:Depends}
 Description: International Chemical Identifier (InChI) generator (libdevel)
- Library to generate Standard/non-Standard InChI/InChIKey.
+ Library header to generate Standard/non-Standard InChI/InChIKey.
 
 Package: libinchi1
 Section: libs
