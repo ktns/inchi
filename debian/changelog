@@ -1,6 +1,6 @@
-inchi (1.04-1~1.gbp22d9b8) UNRELEASED; urgency=medium
+inchi (1.04-1~2.gbp447b5d) UNRELEASED; urgency=medium
 
-  ** SNAPSHOT build @22d9b83785d81d7c756fcdaaf0ac58011ac07c17 **
+  ** SNAPSHOT build @447b5dba9fbdf58436f7b9bd9dab974c1eaceddf **
 
   * Initial release. (Closes: #814867)
   * UNRELEASED
