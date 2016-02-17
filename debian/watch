@@ -1,4 +1,4 @@
-version=4
+version=3
 opts=uversionmangle=s/(\d)(\d+)/$1.$2/,compression=xz \
 http://www.inchi-trust.org/downloads/ \
 http://www.inchi-trust.org/download/(\d+)/INCHI-1-API.zip debian uupdate
