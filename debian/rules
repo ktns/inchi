@@ -8,6 +8,12 @@ LIB_DIR=$(CURDIR)/debian/results
 DEST_LIB_DIR=$(CURDIR)/debian/tmp/usr/lib/$(shell dpkg-architecture -q DEB_HOST_GNU_TYPE)
 DEST_INCLUDE_DIR=$(CURDIR)/debian/tmp/usr/include
 
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+else
+NUMJOBS=1
+endif
+
 %:
 	dh $@ --parallel
 
@@ -17,7 +23,7 @@ override_dh_auto_clean:
 
 override_dh_auto_build:
 	mkdir -p $(LIB_DIR)
-	make ISLINUX=1 -C $(API_ROOT_DIR)/gcc_so_makefile \
+	$(MAKE) -j$(NUMJOBS) ISLINUX=1 -C $(API_ROOT_DIR)/gcc_so_makefile \
 		C_COMPILER=$(CC) C_OPTIONS="-c $(CPPFLAGS) $(CFLAGS)" \
 		C_MAIN_OPTIONS=-DBUILD_LINK_AS_DLL C_SO_OPTIONS=-fPIC \
 		LINKER="$(CC) -s $(LDFLAGS)" \
