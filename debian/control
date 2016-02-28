@@ -2,7 +2,7 @@ Source: inchi
 Priority: optional
 Maintainer: Katsuhiko Nishimra <ktns.87@gmail.com>
 Build-Depends: debhelper (>=9)
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Section: science
 Homepage: http://www.inchi-trust.org/
 #Vcs-Git: git://anonscm.debian.org/collab-maint/libinchi1.git
