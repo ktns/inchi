@@ -1,6 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: INCHI-1-API
 Source: http://www.inchi-trust.org/downloads/
+Files-Excluded: */vc9
 
 Files: *
 Copyright: IUPAC and InChI Trust Limited
