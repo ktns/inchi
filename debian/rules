@@ -5,7 +5,7 @@ CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
 LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 API_ROOT_DIR=INCHI_API
 LIB_DIR=$(CURDIR)/debian/results
-DEST_LIB_DIR=$(CURDIR)/debian/tmp/usr/lib/$(shell dpkg-architecture -q DEB_HOST_GNU_TYPE)
+DEST_LIB_DIR=$(CURDIR)/debian/tmp/usr/lib/$(shell dpkg-architecture -q DEB_HOST_MULTIARCH)
 DEST_INCLUDE_DIR=$(CURDIR)/debian/tmp/usr/include
 
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
