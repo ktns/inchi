@@ -15,6 +15,10 @@ Architecture: any
 Depends: libinchi1 (= ${binary:Version}), ${misc:Depends}
 Description: International Chemical Identifier (InChI) generator (libdevel)
  Library header to generate Standard/non-Standard InChI/InChIKey.
+ .
+ International Chemical Identifier (InChI) provides a unified and unique
+ representation of specific chemical structures. InChIKey, or hashed
+ InChI, is also useful for search engines or as database key.
 
 Package: libinchi1
 Section: libs
@@ -23,3 +27,7 @@ Multi-Arch: same
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: International Chemical Identifier (InChI) generator
  Library to generate Standard/non-Standard InChI/InChIKey.
+ .
+ International Chemical Identifier (InChI) provides a unified and unique
+ representation of specific chemical structures. InChIKey, or hashed
+ InChI, is also useful for search engines or as database key.
