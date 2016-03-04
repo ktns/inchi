@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 
-CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
-CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
-LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-pie
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 API_ROOT_DIR=INCHI_API
 LIB_DIR=$(CURDIR)/debian/results
 DEST_LIB_DIR=$(CURDIR)/debian/tmp/usr/lib/$(shell dpkg-architecture -q DEB_HOST_MULTIARCH)
@@ -27,7 +27,7 @@ override_dh_auto_build:
 		C_COMPILER=$(CC) C_OPTIONS="-c $(CPPFLAGS) $(CFLAGS)" \
 		C_MAIN_OPTIONS=-DBUILD_LINK_AS_DLL C_SO_OPTIONS=-fPIC \
 		LINKER="$(CC) -s $(LDFLAGS)" \
-		SHARED_LINK="$(CC) -shared" SHARED_LINK_PARM=$(LDFLAGS) \
+		SHARED_LINK="$(CC)" SHARED_LINK_PARM="$(LDFLAGS) -shared" \
 		LIB_DIR=$(LIB_DIR)
 
 override_dh_auto_install:
