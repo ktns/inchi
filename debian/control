@@ -19,6 +19,7 @@ Description: International Chemical Identifier (InChI) generator (libdevel)
 Package: libinchi1
 Section: libs
 Architecture: any
+Multi-Arch: same
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: International Chemical Identifier (InChI) generator
  Library to generate Standard/non-Standard InChI/InChIKey.
